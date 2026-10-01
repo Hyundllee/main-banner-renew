@@ -283,35 +283,35 @@ table {
 .kv-slide .card-ico.ico03 {
   background-image: url("../../../images/kodex/main/slide/slide-top-icon-03.svg");
 }
-.kv-slide .swiper-slide.is-open .card,
+.kv-slide .swiper-slide-active .card,
 .kv-slide .card:hover {
   background: #e3e8fa;
 }
-.kv-slide .swiper-slide.is-open .card .badge,
+.kv-slide .swiper-slide-active .card .badge,
 .kv-slide .card:hover .badge {
   background: #ffffff;
   color: #17255e;
 }
-.kv-slide .swiper-slide.is-open .card .code,
+.kv-slide .swiper-slide-active .card .code,
 .kv-slide .card:hover .code {
   background: #ffffff;
 }
-.kv-slide .swiper-slide.is-open .card .card-desc,
+.kv-slide .swiper-slide-active .card .card-desc,
 .kv-slide .card:hover .card-desc {
   opacity: 0;
   transform: translateY(calc(-8 / 1920 * 100vw));
 }
-.kv-slide .swiper-slide.is-open .card .card-arrow,
+.kv-slide .swiper-slide-active .card .card-arrow,
 .kv-slide .card:hover .card-arrow {
   opacity: 0;
   transform: translateY(calc(8 / 1920 * 100vw));
 }
-.kv-slide .swiper-slide.is-open .card .card-ico,
+.kv-slide .swiper-slide-active .card .card-ico,
 .kv-slide .card:hover .card-ico {
   opacity: 0;
   transform: scale(0.94);
 }
-.kv-slide .swiper-slide.is-open .card .card-data,
+.kv-slide .swiper-slide-active .card .card-data,
 .kv-slide .card:hover .card-data {
   opacity: 1;
   visibility: visible;
@@ -361,9 +361,6 @@ table {
 .kv-slide .swiper-pagination .swiper-pagination-bullet-active {
   width: calc(26 / 1920 * 100vw);
   background: #17255e;
-}
-.kv-slide .swiper-pagination .swiper-pagination-bullet.is-hidden {
-  display: none;
 }
 
 /* kv-theme : 하단 테마 배너 슬라이드 */

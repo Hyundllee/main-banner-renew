@@ -126,94 +126,30 @@ export default class Slide {
         return (size / BASE) * window.innerWidth
     }
 
-    // KODEX: 상단 3장 + 좌우 미리보기 / 맨 왼쪽 카드 상세 노출
+    // KODEX: 상단 3장 + 오른쪽 미리보기 / 맨 왼쪽(active) 카드 상세 노출
     setKvSwiper() {
         if (!this.$swiperEl) return
-        const $wrapper = this.$swiperEl.querySelector('.swiper-wrapper')
-        if (!$wrapper) return
-        const $origin = [...$wrapper.children]
-        this.originLength = $origin.length
-        if (!this.originLength) return
-
-        const isLoop = this.originLength > KV_VIEW
+        const length = this.$swiperEl.querySelectorAll('.swiper-slide').length
+        if (!length) return
+        const isSwipe = length > KV_VIEW
         const $inner = this.$swiperEl.closest('.inner')
-        if ($inner) $inner.classList.toggle('no-swipe', !isLoop)
-
-        // 원본 묶음 단위로 복제해 루프 경계에서도 상품 순서 유지
-        this.clones = []
-        if (isLoop) {
-            while ($wrapper.children.length < KV_VIEW * 4) {
-                $origin.forEach(($slide) => {
-                    const $clone = $slide.cloneNode(true)
-                    $wrapper.appendChild($clone)
-                    this.clones.push($clone)
-                })
-            }
-        }
-        this.slideLength = $wrapper.children.length
+        if ($inner) $inner.classList.toggle('no-swipe', !isSwipe)
         const $controls = this.$swiperEl.closest('.kv-slide') || this.$root
-        this.$pagination = $controls.querySelector('.swiper-pagination')
 
+        // 루프 없이 상품 개수만큼만 이동 / 마지막에서 다음 클릭 시 처음으로 복귀
         this.swiper = new Swiper(this.$swiperEl, {
             slidesPerView: KV_VIEW,
-            centeredSlides: isLoop,
-            initialSlide: isLoop ? 1 : 0,
             spaceBetween: this.__vw(20),
             speed: 800,
-            loop: isLoop,
+            loop: false,
+            rewind: true,
             watchSlidesProgress: true,
-            allowTouchMove: isLoop,
+            allowTouchMove: isSwipe,
             navigation: {
                 prevEl: $controls.querySelector('.swiper-button-prev'),
                 nextEl: $controls.querySelector('.swiper-button-next'),
             },
-            pagination: { el: this.$pagination, clickable: true },
-        })
-
-        // 가운데를 2번 상품으로 맞춰, 왼쪽부터 1-2-3 순서로 시작
-        if (isLoop) {
-            for (let i = 0; i < this.slideLength && this.swiper.realIndex !== 1; i += 1) {
-                this.swiper.slideNext(0, false)
-            }
-        }
-        this.setOpenCard()
-        this.swiper.on('slideChange', () => this.setOpenCard())
-        this.swiper.on('paginationUpdate', () => this.setOpenCard())
-        this.swiper.on('slideChangeTransitionEnd', () => {
-            this.$swiperEl.style.setProperty('--index', this.swiper.realIndex)
-        })
-        this.swiper.on('autoplayTimeLeft', (s, time, progress) => {
-            this.$swiperEl.style.setProperty('--per', 1 - progress)
-        })
-
-        // 기본 클릭 처리보다 먼저, 왼쪽 카드 기준으로 이동
-        this.onPaginationClick = (e) => {
-            const $bullet = e.target.closest('.swiper-pagination-bullet')
-            if (!$bullet) return
-            e.stopPropagation()
-            const $bullets = [...this.$pagination.querySelectorAll('.swiper-pagination-bullet')]
-            const index = $bullets.indexOf($bullet)
-            if (isLoop && index >= 0 && index < this.originLength) {
-                this.swiper.slideToLoop(index + 1)
-            }
-        }
-        if (this.$pagination) this.$pagination.addEventListener('click', this.onPaginationClick, true)
-    }
-
-    setOpenCard() {
-        const swiper = this.swiper
-        if (!swiper || swiper.destroyed) return
-        const index = swiper.params.loop
-            ? (swiper.realIndex - 1 + this.slideLength) % this.slideLength : 0
-
-        swiper.slides.forEach(($slide, i) => {
-            const dataIndex = $slide.getAttribute('data-swiper-slide-index')
-            $slide.classList.toggle('is-open', (dataIndex === null ? i : Number(dataIndex)) === index)
-        })
-        if (!this.$pagination) return
-        this.$pagination.querySelectorAll('.swiper-pagination-bullet').forEach(($bullet, i) => {
-            $bullet.classList.toggle('is-hidden', i >= this.originLength)
-            $bullet.classList.toggle('swiper-pagination-bullet-active', i === index % this.originLength)
+            pagination: { el: $controls.querySelector('.swiper-pagination'), clickable: true },
         })
     }
 
@@ -256,9 +192,7 @@ export default class Slide {
             this.$swiperEl.removeEventListener('mouseenter', this.onMouseEnter)
             this.$swiperEl.removeEventListener('mouseleave', this.onMouseLeave)
         }
-        if (this.$pagination) this.$pagination.removeEventListener('click', this.onPaginationClick, true)
         if (this.swiper && !this.swiper.destroyed) this.swiper.destroy(true, true)
         if (this.themeSwiper && !this.themeSwiper.destroyed) this.themeSwiper.destroy(true, true)
-        ;(this.clones || []).forEach(($clone) => $clone.remove())
     }
 }

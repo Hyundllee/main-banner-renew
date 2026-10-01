@@ -36,7 +36,8 @@
 .kv-slide {
     padding: __vw(24) 0 __vw(32);
 
-    // 좌우 카드가 inner 밖으로 걸쳐 보이도록
+    // 이전 / 다음 카드가 inner 밖으로 걸쳐 보이도록
+    // 첫 슬라이드에선 이전 카드가 없어 오른쪽만 노출
     .swiper { overflow: visible; }
 
     .swiper-slide {
@@ -231,8 +232,8 @@
     }
 
     // hover / 기본 펼침 카드
-    // is-open 은 노출 3장 중 맨 왼쪽 카드에 js 가 부여
-    .swiper-slide.is-open .card,
+    // 노출 3장 중 맨 왼쪽 카드 = swiper 가 부여하는 swiper-slide-active
+    .swiper-slide-active .card,
     .card:hover {
         background: #e3e8fa;
 
@@ -310,9 +311,6 @@
             width: __vw(26);
             background: #17255e;
         }
-
-        // loop 여유분 확보용 복제 슬라이드의 인디케이터는 숨김
-        .swiper-pagination-bullet.is-hidden { display: none; }
     }
 }
 
