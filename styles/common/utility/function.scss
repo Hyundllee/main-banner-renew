@@ -1,0 +1,10 @@
+/* common */
+// 기준 뷰포트 1920 / px -> vw 변환
+@function __vw($size, $viewport: 1920) {
+    @return calc(#{$size} / #{$viewport} * 100vw);
+}
+
+// 이미지 경로 (컴파일된 css 기준 상대경로)
+@function __img($path) {
+    @return url("../../../images/kodex/main/#{$path}");
+}

@@ -1,0 +1,32 @@
+/* common */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+    width: 100%;
+    -webkit-text-size-adjust: none;
+}
+
+body {
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif;
+    font-weight: 400;
+    color: #111111;
+    background: #ffffff;
+    letter-spacing: -0.02em;
+}
+
+ul, ol, li { list-style: none; }
+a { color: inherit; text-decoration: none; }
+button { border: 0; background: none; cursor: pointer; font-family: inherit; color: inherit; }
+img { max-width: 100%; vertical-align: top; border: 0; }
+em, address { font-style: normal; }
+table { border-collapse: collapse; border-spacing: 0; }
+
+.blind {
+    overflow: hidden;
+    position: absolute;
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    clip-path: inset(50%);
+}

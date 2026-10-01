@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "kv-preview",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["--yes", "http-server", ".", "-p", "5500", "-c-1"],
+      "port": 5500
+    },
+    {
+      "name": "kv-preview-mob",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["--yes", "http-server", "../main-banner-renew-mob", "-p", "5510", "-c-1"],
+      "port": 5510
+    }
+  ]
+}

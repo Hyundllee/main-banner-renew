@@ -1,0 +1,470 @@
+/* common */
+// 슬라이드 영역 공통
+.kv-kodex {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: #ffffff;
+
+    .inner {
+        position: relative;
+        width: __vw(1504);
+        margin: 0 auto;
+    }
+
+    // swiper 기본 스타일 초기화
+    .swiper-button-prev,
+    .swiper-button-next {
+        margin: 0;
+
+        &::after { display: none; }
+    }
+
+    .swiper-pagination { position: static; }
+
+    // 슬라이드가 노출 개수 이하일 때 : 화살표 / 인디케이터 없는 default
+    .no-swipe {
+        .swiper-button-prev,
+        .swiper-button-next,
+        .swiper-pagination,
+        .theme-control { display: none; }
+    }
+}
+
+
+/* kv-slide : 상단 상품 카드 슬라이드 */
+.kv-slide {
+    padding: __vw(24) 0 __vw(32);
+
+    // 좌우 카드가 inner 밖으로 걸쳐 보이도록
+    .swiper { overflow: visible; }
+
+    .swiper-slide {
+        // js 동작 전 기본 값 (swiper 가 inline 으로 덮어씀)
+        width: __vw(488);
+        height: auto;
+        transition: opacity 0.4s ease;
+    }
+
+    // 좌우로 걸쳐 보이는 이전 / 다음 카드
+    .swiper-slide:not(.swiper-slide-visible) {
+        opacity: 0.4;
+    }
+
+    // 카드 기본
+    .card {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: __vw(376);
+        padding: __vw(36);
+        border-radius: __vw(20);
+        background: #ffffff;
+        transition: background-color 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    .card-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        height: __vw(32);
+        padding: 0 __vw(16);
+        border-radius: __vw(16);
+        background: #17255e;
+        font-size: __vw(15);
+        font-weight: 600;
+        color: #ffffff;
+        transition: background-color 0.4s cubic-bezier(0.22, 0.61, 0.36, 1), color 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    .code {
+        display: inline-flex;
+        align-items: center;
+        height: __vw(32);
+        padding: 0 __vw(16);
+        border-radius: __vw(16);
+        background: #f2f4f8;
+        font-size: __vw(15);
+        font-weight: 500;
+        color: #4a4a4a;
+        transition: background-color 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    .card-tit {
+        margin-top: __vw(20);
+
+        span,
+        strong {
+            display: block;
+            font-size: __vw(26);
+            font-weight: 700;
+            line-height: 1.3;
+            color: #111111;
+        }
+    }
+
+    // 기본 상태 / hover 상태를 같은 자리에서 교차시켜 부드럽게 전환
+    .card-desc {
+        position: absolute;
+        left: __vw(36);
+        right: __vw(36);
+        top: __vw(172);
+        font-size: __vw(17);
+        font-weight: 500;
+        line-height: 1.5;
+        color: #2b59ff;
+        transition: opacity 0.4s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    // 지표 : hover / 활성 시 노출
+    .card-data {
+        position: absolute;
+        left: __vw(36);
+        right: __vw(36);
+        bottom: __vw(36);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(__vw(12));
+        transition: opacity 0.4s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1), visibility 0.4s;
+    }
+
+    .data-list {
+        display: flex;
+        align-items: flex-start;
+
+        li {
+            width: __vw(140);
+
+            span {
+                display: block;
+                font-size: __vw(15);
+                font-weight: 400;
+                line-height: 1.35;
+                color: #767676;
+            }
+
+            em {
+                display: block;
+                margin-top: __vw(2);
+                font-size: __vw(21);
+                font-weight: 700;
+                line-height: 1.25;
+                color: #111111;
+            }
+        }
+
+        &.rate {
+            margin-top: __vw(12);
+
+            li span { font-size: __vw(14); }
+            li em { font-size: __vw(19); }
+            li em.up { color: #e5342b; }
+            li em.down { color: #2b59ff; }
+        }
+    }
+
+    .card-foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: __vw(10);
+        padding-top: __vw(14);
+        border-top: 1px solid #ccd5f0;
+    }
+
+    .note {
+        font-size: __vw(14);
+        font-weight: 400;
+        color: #8b8fa3;
+    }
+
+    .btn-detail {
+        display: inline-flex;
+        align-items: center;
+        height: __vw(36);
+        padding: 0 __vw(20);
+        border-radius: __vw(18);
+        background: #ffffff;
+        font-size: __vw(15);
+        font-weight: 600;
+        color: #111111;
+
+        &::after {
+            content: "";
+            width: __vw(14);
+            height: __vw(14);
+            margin-left: __vw(8);
+            background: __img("slide/card-arrow-right.svg") no-repeat center / 100% auto;
+        }
+    }
+
+    // 기본 상태 화살표 / 아이콘
+    .card-arrow {
+        position: absolute;
+        left: __vw(36);
+        bottom: __vw(36);
+        width: __vw(36);
+        height: __vw(36);
+        background: __img("slide/card-arrow-right.svg") no-repeat center / 100% auto;
+        transition: opacity 0.4s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    .card-ico {
+        position: absolute;
+        right: __vw(28);
+        bottom: __vw(24);
+        width: __vw(90);
+        height: __vw(90);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 100% auto;
+        transition: opacity 0.4s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+
+        &.ico01 { background-image: __img("slide/slide-top-icon-01.svg"); }
+        &.ico02 { background-image: __img("slide/slide-top-icon-02.svg"); }
+        &.ico03 { background-image: __img("slide/slide-top-icon-03.svg"); }
+    }
+
+    // hover / 기본 펼침 카드
+    // is-open 은 노출 3장 중 맨 왼쪽 카드에 js 가 부여
+    .swiper-slide.is-open .card,
+    .card:hover {
+        background: #e3e8fa;
+
+        .badge { background: #ffffff; color: #17255e; }
+        .code { background: #ffffff; }
+
+        .card-desc {
+            opacity: 0;
+            transform: translateY(#{__vw(-8)});
+        }
+
+        .card-arrow {
+            opacity: 0;
+            transform: translateY(#{__vw(8)});
+        }
+
+        .card-ico {
+            opacity: 0;
+            transform: scale(0.94);
+        }
+
+        .card-data {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+    }
+
+    // 좌우 화살표
+    .swiper-button-prev,
+    .swiper-button-next {
+        top: __vw(190);
+        width: __vw(56);
+        height: __vw(56);
+        border-radius: 50%;
+        background: #ffffff no-repeat center;
+        background-size: __vw(11) auto;
+        box-shadow: 0 __vw(4) __vw(16) rgba(17, 17, 17, 0.14);
+        transition: box-shadow 0.2s ease;
+
+        &:hover { box-shadow: 0 __vw(6) __vw(20) rgba(17, 17, 17, 0.22); }
+    }
+
+    .swiper-button-prev {
+        left: 0;
+        background-image: __img("slide/icon-slide-left-arrow.svg");
+        transform: translate(-50%, -50%);
+    }
+
+    .swiper-button-next {
+        right: 0;
+        left: auto;
+        background-image: __img("slide/icon-slide-right-arrow.svg");
+        transform: translate(50%, -50%);
+    }
+
+    // 인디케이터
+    .swiper-pagination {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: __vw(24);
+
+        .swiper-pagination-bullet {
+            width: __vw(8);
+            height: __vw(8);
+            margin: 0 __vw(4);
+            border-radius: __vw(4);
+            background: #c9cfe0;
+            opacity: 1;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+
+        .swiper-pagination-bullet-active {
+            width: __vw(26);
+            background: #17255e;
+        }
+
+        // loop 여유분 확보용 복제 슬라이드의 인디케이터는 숨김
+        .swiper-pagination-bullet.is-hidden { display: none; }
+    }
+}
+
+
+/* kv-theme : 하단 테마 배너 슬라이드 */
+.kv-theme {
+    padding: __vw(32) 0 __vw(28);
+    background: #eff2fb;
+
+    // 미리보기 없이 inner 안에서만 노출
+    .swiper { overflow: hidden; }
+
+    .swiper-slide {
+        // js 동작 전 기본 값 (swiper 가 inline 으로 덮어씀)
+        width: __vw(358);
+        height: auto;
+    }
+
+    .theme-link {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: __vw(148);
+        padding: __vw(20) __vw(24);
+        border-radius: __vw(12);
+        overflow: hidden;
+    }
+
+    .label {
+        display: block;
+        font-size: __vw(14);
+        font-weight: 600;
+        line-height: 1;
+    }
+
+    .txt {
+        margin-top: __vw(10);
+        font-size: __vw(16);
+        font-weight: 500;
+        line-height: 1.5;
+        color: #111111;
+    }
+
+    .theme-arrow {
+        position: absolute;
+        left: __vw(24);
+        bottom: __vw(18);
+        width: __vw(24);
+        height: __vw(24);
+        background: __img("slide/card-arrow-right.svg") no-repeat center / 100% auto;
+    }
+
+    .theme-ico {
+        position: absolute;
+        right: __vw(20);
+        bottom: __vw(18);
+        width: __vw(50);
+        height: __vw(50);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 100% auto;
+    }
+
+    // 배너 타입별 컬러
+    .type01 {
+        .theme-link { background: #fce9ec; }
+        .label { color: #e0566b; }
+        .theme-ico { background-image: __img("slide/slide-btm-icon-01.svg"); }
+    }
+
+    .type02 {
+        .theme-link { background: #e7effc; }
+        .label { color: #2b59ff; }
+        .theme-ico { background-image: __img("slide/slide-btm-icon-02.svg"); }
+    }
+
+    .type03 {
+        .theme-link { background: #e4f2e6; }
+        .label { color: #3c9e5f; }
+        .theme-ico { background-image: __img("slide/slide-btm-icon-03.svg"); }
+    }
+
+    .type04 {
+        .theme-link { background: #dff0fa; }
+        .label { color: #0f8ecc; }
+        .theme-ico {
+            right: __vw(14);
+            bottom: __vw(14);
+            width: __vw(100);
+            height: __vw(75);
+            background-image: __img("slide/slide-btm-icon-04.svg");
+        }
+    }
+
+    // 하단 인디케이터 : 화살표 + 도트
+    .theme-control {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: __vw(20);
+    }
+
+    .theme-prev,
+    .theme-next {
+        flex: none;
+        width: __vw(24);
+        height: __vw(24);
+        background: no-repeat center;
+        background-size: __vw(7) auto;
+
+        // 더 이동할 슬라이드가 없을 때 off 상태
+        &.swiper-button-disabled {
+            cursor: default;
+            pointer-events: none;
+        }
+    }
+
+    .theme-prev {
+        background-image: __img("slide/icon-slide-left-arrow.svg");
+
+        &.swiper-button-disabled { background-image: __img("slide/icon-slide-left-arrow-off.svg"); }
+    }
+
+    .theme-next {
+        background-image: __img("slide/icon-slide-right-arrow.svg");
+
+        &.swiper-button-disabled { background-image: __img("slide/icon-slide-right-arrow-off.svg"); }
+    }
+
+    .theme-pagination {
+        // swiper 가 잡는 position:absolute / width:100% 초기화
+        position: static;
+        flex: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        margin: 0 __vw(6);
+
+        .swiper-pagination-bullet {
+            width: __vw(8);
+            height: __vw(8);
+            margin: 0 __vw(4);
+            border-radius: __vw(4);
+            background: #c2cadd;
+            opacity: 1;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+
+        .swiper-pagination-bullet-active {
+            width: __vw(22);
+            background: #17255e;
+        }
+    }
+}

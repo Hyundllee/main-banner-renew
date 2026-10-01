@@ -1,0 +1,10 @@
+/* common */
+@import "../../common/utility/index";
+
+.main.index.kodex {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* kv-kodex : 메인 슬라이드 영역 */
+@import "slide-layout";
