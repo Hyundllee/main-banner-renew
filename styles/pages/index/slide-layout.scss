@@ -231,9 +231,9 @@
         &.ico03 { background-image: __img("slide/slide-top-icon-03.svg"); }
     }
 
-    // hover / 기본 펼침 카드
-    // 노출 3장 중 맨 왼쪽 카드 = swiper 가 부여하는 swiper-slide-active
-    .swiper-slide-active .card,
+    // hover 펼침 카드
+    // is-open 은 hover 중인 카드에 js 가 부여
+    .swiper-slide.is-open .card,
     .card:hover {
         background: #e3e8fa;
 

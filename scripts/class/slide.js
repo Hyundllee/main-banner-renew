@@ -126,7 +126,7 @@ export default class Slide {
         return (size / BASE) * window.innerWidth
     }
 
-    // KODEX: 상단 3장 + 오른쪽 미리보기 / 맨 왼쪽(active) 카드 상세 노출
+    // KODEX: 상단 3장 + 좌우 미리보기 / hover 카드 상세 노출
     setKvSwiper() {
         if (!this.$swiperEl) return
         const length = this.$swiperEl.querySelectorAll('.swiper-slide').length
@@ -136,7 +136,7 @@ export default class Slide {
         if ($inner) $inner.classList.toggle('no-swipe', !isSwipe)
         const $controls = this.$swiperEl.closest('.kv-slide') || this.$root
 
-        // 루프 없이 상품 개수만큼만 이동 / 마지막에서 다음 클릭 시 처음으로 복귀
+        // 루프 없이 상품 개수만큼만 이동 / 끝 위치에서 다음 클릭 시 처음으로 복귀
         this.swiper = new Swiper(this.$swiperEl, {
             slidesPerView: KV_VIEW,
             spaceBetween: this.__vw(20),
@@ -150,6 +150,15 @@ export default class Slide {
                 nextEl: $controls.querySelector('.swiper-button-next'),
             },
             pagination: { el: $controls.querySelector('.swiper-pagination'), clickable: true },
+        })
+
+        // hover 중인 카드에만 is-open
+        this.kvHoverEvents = this.swiper.slides.map(($slide) => {
+            const enter = () => $slide.classList.add('is-open')
+            const leave = () => $slide.classList.remove('is-open')
+            $slide.addEventListener('mouseenter', enter)
+            $slide.addEventListener('mouseleave', leave)
+            return { $slide, enter, leave }
         })
     }
 
@@ -192,6 +201,10 @@ export default class Slide {
             this.$swiperEl.removeEventListener('mouseenter', this.onMouseEnter)
             this.$swiperEl.removeEventListener('mouseleave', this.onMouseLeave)
         }
+        ;(this.kvHoverEvents || []).forEach(({ $slide, enter, leave }) => {
+            $slide.removeEventListener('mouseenter', enter)
+            $slide.removeEventListener('mouseleave', leave)
+        })
         if (this.swiper && !this.swiper.destroyed) this.swiper.destroy(true, true)
         if (this.themeSwiper && !this.themeSwiper.destroyed) this.themeSwiper.destroy(true, true)
     }
