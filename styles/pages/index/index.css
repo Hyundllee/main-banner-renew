@@ -332,6 +332,10 @@ table {
 .kv-slide .swiper-button-next:hover {
   box-shadow: 0 calc(6 / 1920 * 100vw) calc(20 / 1920 * 100vw) rgba(17, 17, 17, 0.22);
 }
+.kv-slide .swiper-button-prev.swiper-button-disabled,
+.kv-slide .swiper-button-next.swiper-button-disabled {
+  display: none;
+}
 .kv-slide .swiper-button-prev {
   left: 0;
   background-image: url("../../../images/kodex/main/slide/icon-slide-left-arrow.svg");

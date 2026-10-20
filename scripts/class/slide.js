@@ -136,13 +136,12 @@ export default class Slide {
         if ($inner) $inner.classList.toggle('no-swipe', !isSwipe)
         const $controls = this.$swiperEl.closest('.kv-slide') || this.$root
 
-        // 루프 없이 상품 개수만큼만 이동 / 끝 위치에서 다음 클릭 시 처음으로 복귀
+        // 루프 없이 상품 개수만큼만 이동 / 처음·끝 위치에선 해당 방향 화살표 숨김
         this.swiper = new Swiper(this.$swiperEl, {
             slidesPerView: KV_VIEW,
             spaceBetween: this.__vw(20),
             speed: 800,
             loop: false,
-            rewind: true,
             watchSlidesProgress: true,
             allowTouchMove: isSwipe,
             navigation: {

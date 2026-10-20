@@ -275,6 +275,9 @@
         transition: box-shadow 0.2s ease;
 
         &:hover { box-shadow: 0 __vw(6) __vw(20) rgba(17, 17, 17, 0.22); }
+
+        // 더 이동할 슬라이드가 없는 방향의 화살표는 숨김
+        &.swiper-button-disabled { display: none; }
     }
 
     .swiper-button-prev {
